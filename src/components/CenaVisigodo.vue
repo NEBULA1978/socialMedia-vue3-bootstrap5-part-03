@@ -1,14 +1,20 @@
 <template>
     <div class="container">
+        <!-- Muestra el número de la cena y el rey godo correspondiente -->
         <h2>Cena {{ contador + 1 }} con el rey godo {{ rey }}</h2>
+        <!-- Muestra el precio del producto actual -->
         <h3 class="precio">Precio: {{ productos[contador].precio }}€</h3>
+        <!-- Muestra si el producto es solo para fines de semana o todos los días -->
         <div class="todosLosDias dias" v-if="productos[contador].finDeSemana === true">(Solo fines de semana)</div>
         <div class="dias soloFinesDeSemana" v-else>(De Lunes a Domingo)</div>
+        <!-- Muestra una oferta si el precio es menor a 100 -->
         <div v-if="productos[contador].precio < 100" class="oferta">
             <div>Ahorra un 10% dto: {{ nuevoPrecio }}€</div>
             <img src="/oferta.jpg" alt="rey godo en descuento" />
         </div>
+        <!-- Muestra la imagen correspondiente al producto actual -->
         <img :src="imagen" alt="">
+        <!-- Botón para cambiar al siguiente producto -->
         <button @click="siguiente" class="boton">Siguiente ({{ contador + 1 }}/ {{ total }} )</button>
     </div>
 </template>
@@ -17,32 +23,31 @@
 import { ref, computed } from "vue"
 import { productos } from "@/datos.js"
 
-
-
+// Define el contador y el total de productos
 const contador = ref(0)
 const total = productos.length;
-// Define the URL for the images
-const ruta = "https://www.html6.es/img/rey_"
 
+// Función para cambiar al siguiente producto
 const siguiente = () => {
-    // Increment the value of contador
     contador.value++
-    // Check if contador is greater than or equal to total
     if (contador.value >= total) {
-        // If so, reset contador back to 0
         contador.value = 0;
     }
 }
+
+// Calcula el nombre del rey godo con formato
 const rey = computed(() => {
     const elNombre = productos[contador.value].nombre.toLowerCase()
-
     return elNombre.substring(0, 1).toUpperCase() + elNombre.substring(1)
 })
 
+// Calcula la URL de la imagen del producto
+const ruta = "https://www.html6.es/img/rey_"
 const imagen = computed(() => {
     return `${ruta}${productos[contador.value].nombre.toLowerCase()}.png`
 })
 
+// Calcula el nuevo precio con descuento del producto
 const nuevoPrecio = computed(() => {
     return Number(productos[contador.value].precio / 1.10).toFixed(2)
 })
@@ -55,7 +60,6 @@ const nuevoPrecio = computed(() => {
 
 .boton {
     margin-top: 20px;
-    /* Espacio entre la imagen y el botón */
 }
 
 .todosLosDias {
