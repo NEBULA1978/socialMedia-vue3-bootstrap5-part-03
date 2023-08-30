@@ -22,6 +22,12 @@
 				:class="{ active: activePath.posts }">
 				<span class="material-icons-round"> featured_play_list </span>
 			</router-link>
+			<router-link
+				to="/posts"
+				class="nav-link"
+				:class="{ active: activePath.posts }">
+				<span class="material-icons-round"> featured_play_list </span>
+			</router-link>
 		</div>
 	</nav>
 </template>
